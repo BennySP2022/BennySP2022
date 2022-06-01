@@ -125,19 +125,21 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(
                           width: 6,
                         ),
-                        Column(
-                          children: [
-                            Text("Matematika"),
-                            Text("0/50 Paket Latihan Soal "),
-                            Stack(
-                              children: [
-                                Container(
-                                  height: 19,
-                                  width: double.infinity,
-                                ),
-                              ],
-                            ),
-                          ],
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text("Matematika"),
+                              Text("0/50 Paket Latihan Soal "),
+                              Stack(
+                                children: [
+                                  Container(
+                                    height: 10,
+                                    width: double.infinity,
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
