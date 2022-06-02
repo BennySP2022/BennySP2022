@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:latsol_akhir/R/r.dart';
 
+import 'mapel_page.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -15,133 +17,35 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: R.colors.grey,
       body: SafeArea(
-        child: Column(
+        child: ListView(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Nama User",
-                          style: GoogleFonts.poppins().copyWith(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        Text(
-                          "Selamat Datang",
-                          style: GoogleFonts.poppins().copyWith(
-                            fontSize: 12,
-                            // fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Image.asset(
-                    R.assets.imgUser,
-                    width: 35,
-                    height: 35,
-                  ),
-                ],
-              ),
-            ),
+            _buildHomeUserProfile(),
+            _buildTopBanner(context),
+            _buildHomeListMapel(),
             Container(
-              height: 147,
-              width: double.infinity,
-              margin: const EdgeInsets.symmetric(
-                horizontal: 15.0,
-                //vertical: 15.0,
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10.0,
-                vertical: 15.0,
-              ),
-              decoration: BoxDecoration(
-                color: R.colors.primary,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Stack(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 25, vertical: 15),
-                    child: Text(
-                      "Mau Kerjain Soal apa hari ini ?",
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    right: 0,
-                    bottom: 0,
-                    child: Image.asset(
-                      R.assets.imgHome,
-                      width: MediaQuery.of(context).size.width * 0.5,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 21),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
                   Row(
                     children: [
-                      Text("Pembelajaran"),
-                      TextButton(onPressed: () {}, child: Text("Lihat Semua")),
+                      Text(
+                        "Terbaru",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: R.colors.primary,
+                        ),
+                      ),
                     ],
                   ),
                   Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 21),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 18, vertical: 21),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 53,
-                          width: 53,
-                          padding: EdgeInsets.all(13),
-                          decoration: BoxDecoration(
-                            color: R.colors.grey,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Image.asset(R.assets.icAtom),
-                        ),
-                        SizedBox(
-                          width: 6,
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text("Matematika"),
-                              Text("0/50 Paket Latihan Soal "),
-                              Stack(
-                                children: [
-                                  Container(
-                                    height: 10,
-                                    width: double.infinity,
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                    height: 170,
+                    child: ListView.builder(
+                      itemCount: 5,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: ((context, index) {
+                        return Image.asset(R.assets.banneHome);
+                      }),
                     ),
                   ),
                 ],
@@ -149,6 +53,195 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Container _buildHomeListMapel() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 21),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                "Pembelajaran",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: R.colors.primary,
+                ),
+              ),
+              Spacer(),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(MapelPage.route);
+                },
+                child: Text(
+                  "Lihat Semua",
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: R.colors.primary,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          MapelWidget(),
+          MapelWidget(),
+          MapelWidget(),
+        ],
+      ),
+    );
+  }
+
+  Container _buildTopBanner(BuildContext context) {
+    return Container(
+      height: 147,
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(
+        horizontal: 15.0,
+        //vertical: 15.0,
+      ),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10.0,
+        vertical: 15.0,
+      ),
+      decoration: BoxDecoration(
+        color: R.colors.primary,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Stack(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width * 0.4,
+            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            child: Text(
+              "Mau Kerjain Soal apa hari ini ?",
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: Image.asset(
+              R.assets.imgHome,
+              width: MediaQuery.of(context).size.width * 0.5,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Padding _buildHomeUserProfile() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Nama User",
+                  style: GoogleFonts.poppins().copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                Text(
+                  "Selamat Datang",
+                  style: GoogleFonts.poppins().copyWith(
+                    fontSize: 12,
+                    // fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Image.asset(
+            R.assets.imgUser,
+            width: 35,
+            height: 35,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MapelWidget extends StatelessWidget {
+  const MapelWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 21),
+      child: Row(
+        children: [
+          Container(
+            height: 53,
+            width: 53,
+            padding: EdgeInsets.all(13),
+            decoration: BoxDecoration(
+              color: R.colors.grey,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Image.asset(R.assets.icAtom),
+          ),
+          SizedBox(
+            width: 6,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Matematika",
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "0/50 Paket Latihan Soal ",
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Stack(
+                  children: [
+                    Container(
+                      height: 10,
+                      width: double.infinity,
+                      color: R.colors.grey,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: R.colors.grey,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
